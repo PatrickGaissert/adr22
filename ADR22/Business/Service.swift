@@ -14,51 +14,42 @@ struct Service {
     private let networkAdapter = NetworkAdapter()
     private let persistenceAdapter = PersistenceAdapter()
 
-    func divisions(completion: @escaping ([Division]?) -> Void) {
-        guard let divisions = persistenceAdapter.retrieveDivisions() else {
-            // Handle persistence error
-            completion(nil)
-            return
-        }
+    func divisions() async throws -> [Division] {
+        let divisions = try persistenceAdapter.retrieveDivisions()
 
         if !divisions.isEmpty {
-            completion(divisions)
+            return divisions
         } else {
-            updateEmployees {
-                completion(self.persistenceAdapter.retrieveDivisions())
-            }
+            try await updateEmployees()
+            return try persistenceAdapter.retrieveDivisions()
         }
     }
 
-    func employees(for division: Division) -> [Employee]? {
-        return persistenceAdapter.retrieveEmployees(for: division)
+    func employees(for division: Division) throws -> [Employee] {
+        return try persistenceAdapter.retrieveEmployees(for: division)
     }
 
     // MARK: - Private methods
 
-    private func updateEmployees(completion: @escaping () -> Void) {
-        networkAdapter.retrieveEmployeeData(completionHandler: { (data, _) in
-            guard let data = data,
-                  let employeeData = try? JSONDecoder().decode([EmployeeData].self, from: data) else {
-                DispatchQueue.main.async(execute: { completion() })
-                return
-            }
-
-            self.persistEmployeeData(employeeData)
-
-            DispatchQueue.main.async(execute: { completion() })
-        })
+    private func updateEmployees() async throws {
+        let data = try await networkAdapter.retrieveEmployeeData()
+        let employeeData = try JSONDecoder().decode([EmployeeData].self, from: data)
+        await persistEmployeeData(employeeData)
     }
 
-    private func persistEmployeeData(_ employeeData: [EmployeeData]) {
-        employeeData.forEach { (employee) in
-            self.persistEmployee(employee)
+    private func persistEmployeeData(_ employeeData: [EmployeeData]) async {
+        await withTaskGroup(of: Void.self) { taskGroup in
+            employeeData.forEach { (employee) in
+                taskGroup.addTask {
+                    await persistEmployee(employee)
+                }
+            }
         }
 
-        persistenceAdapter.saveContext()
+        await persistenceAdapter.saveContext()
     }
 
-    private func persistEmployee(_ employee: EmployeeData) {
+    private func persistEmployee(_ employee: EmployeeData) async {
         var location: CLLocation?
         let locationComponents = employee.location.components(separatedBy: ",")
 
@@ -73,7 +64,6 @@ struct Service {
             photo = UIImage(data: photoData)
         }
 
-        persistenceAdapter.createEmployee(firstName: employee.firstName, lastName: employee.lastName, location: location, photo: photo, divisionName: employee.division)
+        await persistenceAdapter.createEmployee(firstName: employee.firstName, lastName: employee.lastName, location: location, photo: photo, divisionName: employee.division)
     }
-
 }

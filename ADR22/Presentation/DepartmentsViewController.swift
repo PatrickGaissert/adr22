@@ -20,12 +20,25 @@ class DepartmentsViewController: UIViewController {
 
         title = "Bereiche"
 
+        Task {
+            await loadDivisions()
+        }
+    }
+
+    private func loadDivisions() async {
         activityIndicator.startAnimating()
-        service.divisions(completion: { (divisions) in
-            self.activityIndicator.stopAnimating()
-            self.divisions = divisions
-            self.tableView.reloadData()
-        })
+        defer {
+            activityIndicator.stopAnimating()
+        }
+
+        do {
+            divisions = try await service.divisions()
+            tableView.reloadData()
+        } catch {
+            let alert = UIAlertController(title: "Fehler", message: "Abrufen der Bereiche ist fehlgeschlagen. Bitte versuchen sie es später erneut", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+        }
     }
 
     // MARK: - Navigation
@@ -37,7 +50,7 @@ class DepartmentsViewController: UIViewController {
             return
         }
 
-        let employees = service.employees(for: division)
+        let employees = try? service.employees(for: division)
         (segue.destination as! EmployeesViewController).employees = employees
     }
 

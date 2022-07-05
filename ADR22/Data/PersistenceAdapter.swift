@@ -12,7 +12,8 @@ import CoreLocation
 import os
 
 /// Database Access Adapter
-class PersistenceAdapter {
+actor PersistenceAdapter {
+    nonisolated
     private var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
@@ -40,33 +41,25 @@ class PersistenceAdapter {
 
     // MARK: - Retrieve
 
-    func retrieveDivisions() -> [Division]? {
+    nonisolated
+    func retrieveDivisions() throws -> [Division] {
         os_log("Retrieving divisions via persistence.")
 
-        do {
-            let request: NSFetchRequest<Division> = Division.fetchRequest()
-            let divisions = try context.fetch(request)
-            return divisions
-        } catch {
-            os_log("%@", String(describing: error))
-            return nil
-        }
+        let request: NSFetchRequest<Division> = Division.fetchRequest()
+        let divisions = try context.fetch(request)
+        return divisions
     }
 
-    func retrieveEmployees(for division: Division) -> [Employee]? {
+    nonisolated
+    func retrieveEmployees(for division: Division) throws -> [Employee] {
         os_log("Retrieving employees via persistence.")
 
-        do {
-            let request: NSFetchRequest<Employee> = Employee.fetchRequest()
+        let request: NSFetchRequest<Employee> = Employee.fetchRequest()
 
-            // Constrain to division
-            request.predicate = NSPredicate(format: "division == %@", division)
-            let employees = try context.fetch(request)
-            return employees
-        } catch {
-            os_log("%@", String(describing: error))
-            return nil
-        }
+        // Constrain to division
+        request.predicate = NSPredicate(format: "division == %@", division)
+        let employees = try context.fetch(request)
+        return employees
     }
 
     // MARK: - Private methods
@@ -87,6 +80,7 @@ class PersistenceAdapter {
 
     // MARK: - Core Data stack
 
+    nonisolated
     private lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
