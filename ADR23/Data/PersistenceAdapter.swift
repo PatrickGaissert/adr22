@@ -7,35 +7,24 @@
 //
 
 import UIKit
-import CoreData
 import CoreLocation
 import os
+import SwiftData
 
 /// Database Access Adapter
 class PersistenceAdapter {
-    private var context: NSManagedObjectContext {
-        return persistentContainer.viewContext
-    }
+    private lazy var context: ModelContext = {
+        return ModelContext(modelContainer)
+    }()
 
     // MARK: - Create
 
     func createEmployee(firstName: String, lastName: String, location: CLLocation?, photo: UIImage?, divisionName: String) {
-        let employee = Employee(context: context)
-        employee.firstName = firstName
-        employee.lastName = lastName
-        employee.location = location
-        employee.photo = photo
+        let division = Division(name: divisionName)
+        context.insert(division)
 
-        let division: Division
-
-        if let existingDivision = retrieveDivision(name: divisionName) {
-            division = existingDivision
-        } else {
-            // New division
-            division = Division(context: context)
-            division.name = divisionName
-        }
-        employee.division = division
+        let employee = Employee(firstName: firstName, lastName: lastName, location: location, photo: photo, division: division)
+        context.insert(employee)
     }
 
     // MARK: - Retrieve
@@ -43,38 +32,34 @@ class PersistenceAdapter {
     func retrieveDivisions() throws -> [Division] {
         os_log("Retrieving divisions via persistence.")
 
-        let request: NSFetchRequest<Division> = Division.fetchRequest()
-        let divisions = try context.fetch(request)
-        return divisions
+        let request = FetchDescriptor<Division>()
+        return try context.fetch(request)
     }
 
     // MARK: - Private methods
 
     private func retrieveDivision(name: String) -> Division? {
         do {
-            let request: NSFetchRequest<Division> = Division.fetchRequest()
-
             // Constrain to name
-            request.predicate = NSPredicate(format: "name == %@", name)
-            let divisions = try context.fetch(request)
-            return divisions.first
+            let predicate = #Predicate<Division> { division in
+                division.name == name
+            }
+            var request = FetchDescriptor<Division>(predicate: predicate)
+            request.fetchLimit = 1
+
+            return try context.fetch(request).first
         } catch {
             os_log("%@", String(describing: error))
             return nil
         }
     }
 
-    // MARK: - Core Data stack
+    // MARK: - SwiftData stack
 
-    private lazy var persistentContainer: NSPersistentContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-        */
-        let container = NSPersistentContainer(name: "ADR23")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+    private lazy var modelContainer: ModelContainer = {
+        do {
+            return try ModelContainer(for: [Division.self, Employee.self])
+        } catch {
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -89,14 +74,12 @@ class PersistenceAdapter {
                  */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
-        })
-        return container
+        }
     }()
 
-    // MARK: - Core Data Saving support
+    // MARK: - SwiftData Saving support
 
     func saveContext() {
-        let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
                 try context.save()

@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21223.12" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Division" representedClassName="Division" syncable="YES" codeGenerationType="class">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22158.8" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Division" representedClassName="Division" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="employees" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Employee" inverseName="division" inverseEntity="Employee"/>
     </entity>
-    <entity name="Employee" representedClassName="Employee" syncable="YES" codeGenerationType="class">
+    <entity name="Employee" representedClassName="Employee" syncable="YES">
         <attribute name="firstName" attributeType="String"/>
         <attribute name="lastName" attributeType="String"/>
         <attribute name="location" optional="YES" attributeType="Transformable" valueTransformerName="" customClassName="CoreLocation.CLLocation"/>
         <attribute name="photo" optional="YES" attributeType="Transformable" valueTransformerName="" customClassName="UIKit.UIImage"/>
         <relationship name="division" maxCount="1" deletionRule="Nullify" destinationEntity="Division" inverseName="employees" inverseEntity="Division"/>
     </entity>
-    <elements>
-        <element name="Division" positionX="-54" positionY="246" width="128" height="73"/>
-        <element name="Employee" positionX="-63" positionY="-18" width="128" height="104"/>
-    </elements>
 </model>

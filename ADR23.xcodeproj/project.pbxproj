@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		EF38947728747457009821DF /* NetworkAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = EF38947628747457009821DF /* NetworkAdapter.m */; };
+		EF5BD58F2A4C9D6300CD819B /* Division.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5BD58D2A4C9D6300CD819B /* Division.swift */; };
+		EF5BD5902A4C9D6300CD819B /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5BD58E2A4C9D6300CD819B /* Employee.swift */; };
 		FD7C52B11F2A0CD80086F285 /* Employee+ADR23.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7C52B01F2A0CD80086F285 /* Employee+ADR23.swift */; };
 		FD9095D81F29DDDF001C6CFC /* EmployeeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9095D71F29DDDF001C6CFC /* EmployeeData.swift */; };
 		FD9095DA1F29E1DB001C6CFC /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9095D91F29E1DB001C6CFC /* Service.swift */; };
@@ -18,7 +20,6 @@
 		FDCE04631F22458D001E43A1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDCE04621F22458D001E43A1 /* MapKit.framework */; };
 		FDDEFAA11F21FAFB00235535 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDEFAA01F21FAFB00235535 /* AppDelegate.swift */; };
 		FDDEFAA61F21FAFB00235535 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDDEFAA41F21FAFB00235535 /* Main.storyboard */; };
-		FDDEFAA91F21FAFB00235535 /* ADR23.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDDEFAA71F21FAFB00235535 /* ADR23.xcdatamodeld */; };
 		FDDEFAAB1F21FAFB00235535 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDDEFAAA1F21FAFB00235535 /* Assets.xcassets */; };
 		FDDEFAAE1F21FAFB00235535 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDDEFAAC1F21FAFB00235535 /* LaunchScreen.storyboard */; };
 		FDDEFABD1F221E1500235535 /* DepartmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDEFABC1F221E1500235535 /* DepartmentsViewController.swift */; };
@@ -28,6 +29,8 @@
 		EF389471287473AD009821DF /* ADR23-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ADR23-Bridging-Header.h"; sourceTree = "<group>"; };
 		EF38947528747457009821DF /* NetworkAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkAdapter.h; sourceTree = "<group>"; };
 		EF38947628747457009821DF /* NetworkAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkAdapter.m; sourceTree = "<group>"; };
+		EF5BD58D2A4C9D6300CD819B /* Division.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Division.swift; sourceTree = "<group>"; };
+		EF5BD58E2A4C9D6300CD819B /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
 		FD7C52B01F2A0CD80086F285 /* Employee+ADR23.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Employee+ADR23.swift"; sourceTree = "<group>"; };
 		FD9095D71F29DDDF001C6CFC /* EmployeeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeData.swift; sourceTree = "<group>"; };
 		FD9095D91F29E1DB001C6CFC /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -39,7 +42,6 @@
 		FDDEFA9D1F21FAFB00235535 /* ADR23.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ADR23.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDDEFAA01F21FAFB00235535 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FDDEFAA51F21FAFB00235535 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		FDDEFAA81F21FAFB00235535 /* ADR22.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ADR22.xcdatamodel; sourceTree = "<group>"; };
 		FDDEFAAA1F21FAFB00235535 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FDDEFAAD1F21FAFB00235535 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FDDEFAAF1F21FAFB00235535 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -132,9 +134,10 @@
 		FDDEFAB81F21FB3000235535 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FDDEFAA71F21FAFB00235535 /* ADR23.xcdatamodeld */,
-				FD9095D71F29DDDF001C6CFC /* EmployeeData.swift */,
+				EF5BD58D2A4C9D6300CD819B /* Division.swift */,
+				EF5BD58E2A4C9D6300CD819B /* Employee.swift */,
 				FD7C52B01F2A0CD80086F285 /* Employee+ADR23.swift */,
+				FD9095D71F29DDDF001C6CFC /* EmployeeData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -218,12 +221,13 @@
 			files = (
 				FDB781181F224247008D17FB /* EmployeeCollectionViewCell.swift in Sources */,
 				FD9095DC1F29E21F001C6CFC /* PersistenceAdapter.swift in Sources */,
-				FDDEFAA91F21FAFB00235535 /* ADR23.xcdatamodeld in Sources */,
+				EF5BD58F2A4C9D6300CD819B /* Division.swift in Sources */,
 				FDDEFABD1F221E1500235535 /* DepartmentsViewController.swift in Sources */,
 				FDDEFAA11F21FAFB00235535 /* AppDelegate.swift in Sources */,
 				EF38947728747457009821DF /* NetworkAdapter.m in Sources */,
 				FD7C52B11F2A0CD80086F285 /* Employee+ADR23.swift in Sources */,
 				FD9095D81F29DDDF001C6CFC /* EmployeeData.swift in Sources */,
+				EF5BD5902A4C9D6300CD819B /* Employee.swift in Sources */,
 				FD9095DA1F29E1DB001C6CFC /* Service.swift in Sources */,
 				FDB781161F2236A3008D17FB /* EmployeesViewController.swift in Sources */,
 				FDCE04601F22453E001E43A1 /* EmployeeLocationViewController.swift in Sources */,
@@ -303,7 +307,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -357,7 +361,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -425,19 +429,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		FDDEFAA71F21FAFB00235535 /* ADR23.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				FDDEFAA81F21FAFB00235535 /* ADR22.xcdatamodel */,
-			);
-			currentVersion = FDDEFAA81F21FAFB00235535 /* ADR22.xcdatamodel */;
-			path = ADR23.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = FDDEFA951F21FAFB00235535 /* Project object */;
 }

@@ -26,7 +26,7 @@ struct Service {
     }
 
     func employees(for division: Division) throws -> [Employee] {
-        return division.employees?.allObjects as? [Employee] ?? []
+        return division.employees
     }
 
     // MARK: - Private methods
